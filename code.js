@@ -105,7 +105,6 @@ function colisionAvecUnContour() {
 		nombreWin++
 		document.getElementById('win').innerHTML = `Win : ${nombreWin}`
 		if(haut == true) {haut = false} else {haut = true}
-		if(gauche == true) {gauche = false} else {gauche = true}
 	}
 	if((coordsBall[1] <= 0 || coordsBall[1] >= 800) /*&& choqueRaquette == false*/) {
 		console.log('Colision en haut ou en bas')
