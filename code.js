@@ -67,6 +67,38 @@ function calculBall() {
 	console.log(`Balle : [${coordsBall[0]},${coordsBall[1]}]`)
 	console.log(`Palet : ${paletCoords[0]} à ${paletCoords[1] }`)
 }
+
+function colisionAvecUnContour() {
+	console.log('Cherche Colision')
+	//Si xBall est sur le palais et yBall sur le palet (800-20)
+	if((paletCoords[0] <= coordsBall[0] && paletCoords[1] >= coordsBall[0]) && (coordsBall[1]+30) >= 790) {
+		console.log('Balle rattrapé')
+		choqueRaquette = true
+		nombreWin++
+		document.getElementById('win').innerHTML = `Win : ${nombreWin}`
+		if(haut == false) {haut = true} else {haut = false}
+	}
+	if(((coordsBall[1]-30) <= 0 || (coordsBall[1]+30) >= 800) /*&& choqueRaquette == false*/) {
+		console.log('Colision en haut ou en bas')
+		if((coordsBall[1]+30)>=800) {
+			//Colision en bas
+			nombreLose++
+			document.getElementById('lose').innerHTML = `Lose : ${nombreLose}`
+		}
+		colision = true
+		if(haut == true) {haut = false} else {haut = true}
+	}
+if(((coordsBall[0]-30) <= 0 || (coordsBall[0]+30) >= 800) /*&& choqueRaquette == false*/) {
+	console.log('Colision à gauche ou droite')
+		colisionCote = true
+		if(gauche == true) {gauche = false} else {gauche = true}
+	}
+	//variable pouvant être utile
+	choqueRaquette = false
+	colision = false
+	colisionCote = false
+}
+
 function dessiner() {
 	var canvas = document.getElementById('canvas')
 	var ctx = canvas.getContext('2d')
@@ -78,7 +110,7 @@ function dessiner() {
 		lineWidth = 1;
 		beginPath(); 
 		fillStyle = "rgb(24,101,196)";
-		rect(paletCoords[0],780,100,20); //x,y,largeur,hauteur
+		rect(paletCoords[0],790,100,10); //x,y,largeur,hauteur
 		closePath();
 		stroke();
 		fill();
@@ -93,37 +125,6 @@ function dessiner() {
 calculBall()
 console.log('refresh')
 animer = window.requestAnimationFrame(dessiner);	
-}
-
-
-function colisionAvecUnContour() {
-	console.log('Cherche Colision')
-	//Si xBall est sur le palais et yBall sur le palet (800-20)
-	if((paletCoords[0] <= coordsBall[0] && paletCoords[1] >= coordsBall[0]) && (coordsBall[1]+30) >= 780) {
-		console.log('Balle rattrapé')
-		choqueRaquette = true
-		nombreWin++
-		document.getElementById('win').innerHTML = `Win : ${nombreWin}`
-		if(haut == true) {haut = false} else {haut = true}
-	}
-	if((coordsBall[1] <= 0 || coordsBall[1] >= 800) /*&& choqueRaquette == false*/) {
-		console.log('Colision en haut ou en bas')
-		if(coordsBall[1]>=800) {
-			nombreLose++
-			document.getElementById('lose').innerHTML = `Lose : ${nombreLose}`
-		}
-		colision = true
-		if(haut == true) {haut = false} else {haut = true}
-	}
-if((coordsBall[0] <= 0 || coordsBall[0] >= 800) /*&& choqueRaquette == false*/) {
-	console.log('Colision à gauche ou droite')
-		colisionCote = true
-		if(gauche == true) {gauche = false} else {gauche = true}
-	}
-	//
-	choqueRaquette = false
-	colision = false
-	colisionCote = false
 }
 
 function exit() {
